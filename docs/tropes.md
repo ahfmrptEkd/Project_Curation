@@ -1,7 +1,7 @@
 Tags for romance books
 
 Fake Dating
-Second Chance 
+Second Chance
 Enemies to Lovers
 Friends to Lovers
 Marriage of Convenience/Arranged Marriage
@@ -25,7 +25,7 @@ Fairy Tale AU
 Royalty
 Failed One Night Stand
 Grief/Loss
-Billionaire 
+Billionaire
 Dark Romance
 GrumpyxSunshine
 Single Parent
