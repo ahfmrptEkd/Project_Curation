@@ -1,0 +1,79 @@
+# pre-commit 설정 파일
+repos:
+  # ruff를 사용한 linting 및 formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # ruff 버전 지정 (최신 버전 사용)
+    rev: v0.1.15
+    hooks:
+      # ruff check (linting)
+      - id: ruff
+        name: ruff-check
+        description: "Python linter using ruff"
+        args: [--fix, --exit-non-zero-on-fix]
+        types: [python]
+
+      # ruff format (formatting)
+      - id: ruff-format
+        name: ruff-format
+        description: "Python formatter using ruff"
+        types: [python]
+
+  # 일반적인 pre-commit 훅들
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # 파일 끝에 빈 줄 추가
+      - id: end-of-file-fixer
+        name: end-of-file-fixer
+        description: "Ensure files end with a newline"
+
+      # 후행 공백 제거
+      - id: trailing-whitespace
+        name: trailing-whitespace
+        description: "Remove trailing whitespace"
+
+      # 큰 파일 체크
+      - id: check-added-large-files
+        name: check-added-large-files
+        description: "Check for large files"
+        args: ['--maxkb=1000']
+
+      # YAML 파일 검증
+      - id: check-yaml
+        name: check-yaml
+        description: "Check YAML syntax"
+
+      # JSON 파일 검증
+      - id: check-json
+        name: check-json
+        description: "Check JSON syntax"
+
+      # TOML 파일 검증
+      - id: check-toml
+        name: check-toml
+        description: "Check TOML syntax"
+
+      # 병합 충돌 마커 체크
+      - id: check-merge-conflict
+        name: check-merge-conflict
+        description: "Check for merge conflict markers"
+
+      # Python AST 체크
+      - id: check-ast
+        name: check-ast
+        description: "Check Python AST"
+
+      # 디버그 구문 체크
+      - id: debug-statements
+        name: debug-statements
+        description: "Check for debugger imports"
+
+# 기본 설정
+default_language_version:
+  python: python3
+
+# 저장소 설정
+default_stages: [pre-commit, pre-push]
+
+# 실패 시 즉시 중단
+fail_fast: false
