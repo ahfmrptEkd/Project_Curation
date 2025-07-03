@@ -1,0 +1,61 @@
+name: Claude Code Action
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  claude:
+    # @claude 멘션이 있을 때만 실행
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude'))) ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.body, '@claude'))
+
+    runs-on: depot-ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # 필요한 도구들 활성화
+          allowed_tools: |
+            mcp__github__create_pull_request,
+            mcp__github__comment_on_pull_request,
+            mcp__github__comment_on_issue,
+            View,
+            GlobTool,
+            GrepTool,
+            BatchTool
+
+          # 선택사항: 프로젝트 맞춤 설명 추가
+          system_prompt: |
+            이 프로젝트는 RAG 독서 큐레이터입니다.
+            - MCP 도구: Google Sheets, Goodreads API, Amazon Ranking
+            - RAG: 벡터 검색 기반 도서 추천
+            - Cold Start Problem: 신규 사용자 즉시 추천
+            - Chain-of-Thought: 단계적 추론 기반 설명 가능한 추천
