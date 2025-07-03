@@ -51,11 +51,3 @@ jobs:
             GlobTool,
             GrepTool,
             BatchTool
-
-          # 선택사항: 프로젝트 맞춤 설명 추가
-          system_prompt: |
-            이 프로젝트는 RAG 독서 큐레이터입니다.
-            - MCP 도구: Google Sheets, Goodreads API, Amazon Ranking
-            - RAG: 벡터 검색 기반 도서 추천
-            - Cold Start Problem: 신규 사용자 즉시 추천
-            - Chain-of-Thought: 단계적 추론 기반 설명 가능한 추천
