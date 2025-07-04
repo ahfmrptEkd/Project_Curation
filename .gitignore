@@ -210,3 +210,4 @@ __marimo__/
 files/
 .env
 .cursor/
+.logs/
