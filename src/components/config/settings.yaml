@@ -1,0 +1,43 @@
+app:
+  name: "Book Curator"
+  version: "0.1.0"
+  debug: false
+
+openai:
+  api_key: "${OPENAI_API_KEY}"
+  model: "gpt-4o-mini"
+
+database:
+  vector_db: "faiss"  # or "chroma"
+
+logging:
+  level: "INFO"
+  to_file: true
+  log_dir: "logs"
+
+  # 로그 파일 순환 설정
+  enable_rotation: true
+  max_file_size: 10485760  # 10MB in bytes
+  backup_count: 5
+
+  # 보안 설정
+  enable_security: true
+  sensitive_data_masking: true
+
+  # 로그 포맷 설정
+  format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+  # 구조화된 로깅 설정
+  structured_logging: false
+
+  # 성능 로깅 설정
+  performance_logging: true
+
+  # 콘솔 출력 설정
+  console_output: true
+
+  # 로그 레벨별 설정
+  levels:
+    file: "INFO"    # 파일에 기록할 최소 레벨
+    console: "INFO" # 콘솔에 출력할 최소 레벨
