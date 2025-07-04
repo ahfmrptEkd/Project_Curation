@@ -111,9 +111,65 @@ def get_database_config() -> Dict[str, Any]:
 
 
 def get_logging_config() -> Dict[str, Any]:
-    """Get logging configuration."""
+    """Get logging configuration with enhanced settings."""
     config = load_config()
-    return config.get("logging", {})
+    logging_config = config.get("logging", {})
+
+    # 기본값 설정
+    default_logging_config = {
+        "level": "INFO",
+        "to_file": True,
+        "log_dir": "logs",
+        "enable_rotation": True,
+        "max_file_size": 10 * 1024 * 1024,  # 10MB
+        "backup_count": 5,
+        "enable_security": True,
+        "sensitive_data_masking": True,
+        "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        "date_format": "%Y-%m-%d %H:%M:%S",
+        "structured_logging": False,
+        "performance_logging": True,
+        "console_output": True,
+        "levels": {"file": "INFO", "console": "INFO"},
+    }
+
+    # 설정 병합 (기본값 + 사용자 설정)
+    merged_config = {**default_logging_config, **logging_config}
+
+    # levels 설정 특별 처리
+    if "levels" in logging_config:
+        merged_config["levels"] = {
+            **default_logging_config["levels"],
+            **logging_config["levels"],
+        }
+
+    return merged_config
+
+
+def get_security_config() -> Dict[str, Any]:
+    """Get security-related configuration."""
+    logging_config = get_logging_config()
+
+    return {
+        "enable_security": logging_config.get("enable_security", True),
+        "sensitive_data_masking": logging_config.get(
+            "sensitive_data_masking", True
+        ),
+        "api_key_masking": True,  # 항상 활성화
+        "email_masking": True,  # 항상 활성화
+    }
+
+
+def get_performance_config() -> Dict[str, Any]:
+    """Get performance monitoring configuration."""
+    logging_config = get_logging_config()
+
+    return {
+        "performance_logging": logging_config.get("performance_logging", True),
+        "slow_query_threshold": 1000,  # ms
+        "memory_usage_logging": True,
+        "api_response_time_logging": True,
+    }
 
 
 def reload_config() -> Dict[str, Any]:
