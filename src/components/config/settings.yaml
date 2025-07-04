@@ -1,6 +1,7 @@
 app:
   name: "Book Curator"
   version: "0.1.0"
+  debug: false
 
 openai:
   api_key: "${OPENAI_API_KEY}"
@@ -8,3 +9,8 @@ openai:
 
 database:
   vector_db: "faiss"  # or "chroma"
+
+logging:
+  level: "INFO"
+  to_file: true
+  log_dir: "logs"
