@@ -1,0 +1,10 @@
+app:
+  name: "Book Curator"
+  version: "0.1.0"
+
+openai:
+  api_key: "${OPENAI_API_KEY}"
+  model: "gpt-4o-mini"
+
+database:
+  vector_db: "faiss"  # or "chroma"
