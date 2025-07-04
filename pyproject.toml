@@ -26,6 +26,12 @@ target-version = "py38"
 # Google 스타일: 라인 길이 80자
 line-length = 80
 
+# 제외 파일
+exclude = [
+    "*.ipynb",
+    "**/*.ipynb",
+]
+
 # Google 스타일 린트 설정
 [tool.ruff.lint]
 
